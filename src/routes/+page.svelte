@@ -12,7 +12,7 @@
     let allCountries : Promise<Country[]> = fetch('https://restcountries.com/v3.1/all').then( (result) => result.json());
 </script>
 
-<div class="flex items-center bg-white rounded-xl shadow-lg max-w-3xl">
+<div class="flex items-center bg-white rounded-xl shadow-lg max-w-3xl p-6 mx-auto space-x-4 my-7">
     {#await allCountries then data}
         <ul class="list-inside">
             {#each data as country}
