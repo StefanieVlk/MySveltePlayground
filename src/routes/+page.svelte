@@ -21,6 +21,9 @@
 						<p class="text-2xl">{country.name.common}</p>
 						<p class="text-m">({country.name.official})</p>
 					</div>
+                    <div class="py-2">
+						<img class="px-56" src={country.flags.png} alt=""/>
+					</div>
                 </li>                
             {/each}
         </ul>
