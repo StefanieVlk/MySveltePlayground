@@ -6,7 +6,8 @@
         },
         flags: {
             png: string
-        }
+        },
+        capital: {}
     }
 
     async function filterCountries(filter: string)
@@ -17,6 +18,22 @@
 	$: countries = filterCountries(filter)
 
     let allCountries : Promise<Country[]> = fetch('https://restcountries.com/v3.1/all').then( (result) => result.json());
+
+    let selectedCountry :Country;
+	let additionalInfoVisible=false;
+	function handleAdditionalInformation(country : Country) 
+	{
+		return function(){
+			additionalInfoVisible = true;
+			if (additionalInfoVisible){
+				selectedCountry = country;
+			}
+		}
+	}
+
+	function handleReturn(){
+		additionalInfoVisible = false;
+	}
 </script>
 
 <div>
@@ -28,6 +45,14 @@
 </div>
 
 <div class="flex items-center bg-white rounded-xl shadow-lg max-w-3xl p-6 mx-auto space-x-4 my-7">
+    {#if additionalInfoVisible}
+	<div class="py-2">
+		<p class="text-2xl">{selectedCountry.name.common}</p>
+		<p class="text-m">({selectedCountry.name.official})</p>
+		<p class="text-m">Capital: {selectedCountry.capital}</p>
+		<button on:click="{handleReturn}">Return to overview</button>
+	</div>
+	{:else}
     {#await countries then data}
         <ul class="list-inside">
             {#each data as country}
@@ -37,10 +62,11 @@
 						<p class="text-m text-gray-600">({country.name.official})</p>
 					</div>
                     <div class="py-2">
-						<img class="px-56" src={country.flags.png} alt=""/>
+						<img class="px-56" src={country.flags.png} on:click={handleAdditionalInformation(country)} alt=""/>
 					</div>
                 </li>                
             {/each}
         </ul>
     {/await}
+    {/if}
 </div>
