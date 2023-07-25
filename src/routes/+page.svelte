@@ -19,7 +19,7 @@
                 <li class="py-6 text-center content-center">
                     <div class="py-2">
 						<p class="font-medium text-2xl">{country.name.common}</p>
-						<p class="text-m">({country.name.official})</p>
+						<p class="text-m text-gray-600">({country.name.official})</p>
 					</div>
                     <div class="py-2">
 						<img class="px-56" src={country.flags.png} alt=""/>
