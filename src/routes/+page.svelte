@@ -9,11 +9,26 @@
         }
     }
 
+    async function filterCountries(filter: string)
+	{		
+		return (await allCountries).filter(country => country.name.common.toLowerCase().includes(filter.toLowerCase()));
+	}
+	let filter = "";
+	$: countries = filterCountries(filter)
+
     let allCountries : Promise<Country[]> = fetch('https://restcountries.com/v3.1/all').then( (result) => result.json());
 </script>
 
+<div>
+    <input
+        class="justify-center flex items-center p-6 max-w-sm mx-auto bg-white rounded-xl shadow-lg space-x-4 my-7"
+        placeholder="Search..."
+        bind:value={filter}
+    />
+</div>
+
 <div class="flex items-center bg-white rounded-xl shadow-lg max-w-3xl p-6 mx-auto space-x-4 my-7">
-    {#await allCountries then data}
+    {#await countries then data}
         <ul class="list-inside">
             {#each data as country}
                 <li class="py-6 text-center content-center">
